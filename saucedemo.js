@@ -28,12 +28,12 @@ const { chromium } = require('playwright');
     }
 
     // 4. Make sure items are present in testData.csv
-   // const testData = require('./testData.csv');
-  //  for (const item of itemsToAdd) {
-      //  if (!testData.includes(item)) {
-    //        console.log(`Item '${item}' is not present in testData.csv`);
-   //     }
-  //  }
+    const testData = require('./testData.csv');
+    for (const item of itemsToAdd) {
+        if (!testData.includes(item)) {
+           console.log(`Item '${item}' is not present in testData.csv`);
+    }
+   }
 
     // 6. Go to cart
     await page.click('[data-test="shopping-cart-link"]');
@@ -59,20 +59,23 @@ const { chromium } = require('playwright');
 
     // 11. Click “Sauce Labs Bolt T-Shirt” in checkout, remove the item
 	 await page.waitForSelector('#item_1_title_link');
-	await page.click('item-1-title-link');
+	await page.click('#item-1-title-link', { timeout: 60000 });
     await page.click('[data-test="remove"]');
 	await page.screenshot({ path: 'screen11.png' });
 
     // 12. Click on the cart
     await page.click('[data-test="cart"]');
+	await page.screenshot({ path: 'screen12.png' });
 
     // 13. Click “Checkout”
     await page.click('[data-test="checkout"]');
+	await page.screenshot({ path: 'screen13.png' });
 
     // 14. Provide your First Name, Last Name, Zip Code
     await page.fill('#first-name', 'John');
     await page.fill('#last-name', 'Doe');
     await page.fill('#postal-code', '12345');
+	await page.screenshot({ path: 'screen14.png' });
 
     // 15. On Checkout: Overview screen, check for the total price and click appropriate button
     const totalPrice = await page.textContent('[data-test="checkout_summary_container"] .summary_total_label');
